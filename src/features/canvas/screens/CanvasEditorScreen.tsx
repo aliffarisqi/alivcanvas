@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import WorkspaceView, { WorkspaceViewHandle } from '@/features/canvas/components/WorkspaceView';
 import { Colors } from '@/app/theme/colors';
 import CanvasBox from '../components/CanvasBox';
-import ResetButton from '@/components/button/ResetButton';
+import FocusButton from '@/components/button/FocusButton';
 
 const CanvasEditorScreen: React.FC = () => {
   const workspaceRef = useRef<WorkspaceViewHandle>(null);
@@ -13,7 +13,7 @@ const CanvasEditorScreen: React.FC = () => {
       <WorkspaceView ref={workspaceRef}>
         <CanvasBox />
       </WorkspaceView>
-      <ResetButton onPress={() => workspaceRef.current?.reset()} />
+      <FocusButton onPress={() => workspaceRef.current?.reset()} />
     </SafeAreaView>
   );
 };
