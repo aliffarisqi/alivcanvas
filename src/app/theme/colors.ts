@@ -1,5 +1,10 @@
 export const Colors = {
-  background: '#FFFFFF',
-  canvasBackground: '#F3F4F6',
-  canvasBorder: '#D1D5DB',
+  white: '#ffffff',
+  background: '#8c8c8c',
+  workspaceBackground: '#555555',
+  canvasColor: '#ffffff',
+  canvasBorder: '#555555',
+
+  buttonColor: '#303030',
+
 } as const;
