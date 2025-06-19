@@ -5,6 +5,6 @@ export const Colors = {
   canvasColor: '#ffffff',
   canvasBorder: '#555555',
 
-  buttonColor: '#303030',
+  buttonColor: '#2e2e2e',
 
 } as const;

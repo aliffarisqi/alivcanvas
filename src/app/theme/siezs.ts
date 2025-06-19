@@ -1,6 +1,8 @@
 export const Sizes = {
 
-  // PADDING
+  // PADDING SCREEN
+  paddingScreen : 16,
+  // PADDING BUTTON
   paddingButtonM : 12,
   paddingButtonMH: 16,
   paddingButtonMV: 12,
@@ -18,4 +20,10 @@ export const Sizes = {
   iconL : 20,
   iconXL : 24,
   icon2XL : 28,
+
+  //SPACE SIZE
+  spaceSm: 4,
+  spaceM: 6,
+  spaceL: 8,
+  spaceXL: 10,
 }

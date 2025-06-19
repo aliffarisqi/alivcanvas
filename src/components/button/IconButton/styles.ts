@@ -4,14 +4,12 @@ import { Sizes } from '@/app/theme/siezs';
 
 export const styles = StyleSheet.create({
   fab: {
-    position: 'absolute',
-    bottom: 50,
-    right: 24,
-    backgroundColor: Colors.buttonColor,
     padding: Sizes.paddingButtonM,
     borderRadius: Sizes.radiusM,
+    backgroundColor: Colors.buttonColor,
+    opacity:0.7
   },
   icon: {
-    color: Colors.white, 
+    color: Colors.white,
   },
 });
