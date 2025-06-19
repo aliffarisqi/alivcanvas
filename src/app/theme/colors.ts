@@ -1,7 +1,10 @@
 export const Colors = {
   white: '#ffffff',
+  dark:"#202020",
+  
   background: '#8c8c8c',
   workspaceBackground: '#555555',
+  
   canvasColor: '#ffffff',
   canvasBorder: '#555555',
 

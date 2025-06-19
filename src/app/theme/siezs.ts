@@ -26,4 +26,11 @@ export const Sizes = {
   spaceM: 6,
   spaceL: 8,
   spaceXL: 10,
+
+  //FONT SIZE
+  fontSm : 12,
+  fontM : 16,
+  fontL : 20,
+  fontXL : 24,
+  font2XL : 28,
 }
