@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Image, Download } from 'lucide-react-native';
+import { Type, Image, Download } from 'lucide-react-native';
 import { styles } from './styles';
 import IconButton from '@/components/button/IconButton';
 
@@ -18,7 +18,7 @@ const TopToolbar: React.FC<TopToolbarProps> = ({
   <View style={styles.container}>
     <View style={styles.leftGroup}>
       <IconButton
-        icon={Text}
+        icon={Type}
         onPress={onAddText}
         accessibilityLabel="Add text"
       />

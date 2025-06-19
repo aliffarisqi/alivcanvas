@@ -1,8 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Metrics } from '@/app/theme/metrics';
 import { Colors } from '@/app/theme/colors';
-
-const WORKSPACE_SIZE = Metrics.canvasSide * Metrics.workspaceMultiplier;
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -13,8 +10,6 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.background, 
   },
   workspace: {
-    width: WORKSPACE_SIZE,
-    height: WORKSPACE_SIZE,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Colors.workspaceBackground,

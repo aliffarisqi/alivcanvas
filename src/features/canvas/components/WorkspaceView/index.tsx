@@ -1,13 +1,15 @@
 import React, { PropsWithChildren, forwardRef, useImperativeHandle } from 'react';
-import { Dimensions } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { styles } from './styles';
 import { Metrics } from '@/app/theme/metrics';
 import { clampPan, clampScale } from '../../utils/math/canvasMath';
+import { screenHeight, screenWidth } from '@/app/utils/device/dimension';
 
-const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
-const WORKSPACE = Metrics.canvasSide * Metrics.workspaceMultiplier;
+const SCREEN_W = screenWidth;
+const SCREEN_H = screenHeight;
+
+const WORKSPACE = Math.max(SCREEN_W, SCREEN_H) * Metrics.workspaceMultiplier;
 
 export interface WorkspaceViewHandle {
   reset: () => void;
