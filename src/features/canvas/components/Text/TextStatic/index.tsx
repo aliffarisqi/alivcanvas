@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Text, StyleSheet, Pressable, TextInput } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -19,30 +19,72 @@ interface Props {
 }
 
 const TextLayer: React.FC<Props> = ({ layer }) => {
-  const { updatePosition, duplicateLayer, deleteLayer } = useTextStore();
+    const {
+    activeLayerId,
+    editingLayerId,
+    setActiveLayer,
+    setEditingLayer,
+    duplicateLayer,
+    deleteLayer,
+    updatePosition,
+    editText,
+  } = useTextStore();
 
-  // current position of the text layer
+  const isActive = activeLayerId === layer.id;
+  const isEditing = editingLayerId === layer.id;
+
+  //---------- DRAG SHARED VALUE ----------//
   const x = useSharedValue(layer.x);
   const y = useSharedValue(layer.y);
-
-  // save the initial position when gesture starts
   const startX = useSharedValue(layer.x);
   const startY = useSharedValue(layer.y);
 
+  //---------- GESTURE HANDLER ----------//
   const panGesture = Gesture.Pan()
     .onBegin(() => {
       startX.value = x.value;
       startY.value = y.value;
+      runOnJS(setActiveLayer)(layer.id);
     })
     .onUpdate((e) => {
       x.value = startX.value + e.translationX;
       y.value = startY.value + e.translationY;
     })
     .onEnd(() => {
-      // save to store Zustand in JS thread
       runOnJS(updatePosition)(layer.id, x.value, y.value);
     });
 
+  //---------- SINGLE & DOUBLE TAP GESTURE ----------//
+  const singleTap = Gesture.Tap()
+    .numberOfTaps(1)
+    .maxDelay(500)
+    .onEnd(() => {
+    const id = layer.id;
+      if (activeLayerId === id) {
+        runOnJS(setActiveLayer)(null);
+        runOnJS(setEditingLayer)(null);
+      } else {
+        runOnJS(setActiveLayer)(id);
+        runOnJS(setEditingLayer)(id);
+      }
+    });
+  // const doubleTap = Gesture.LongPress()
+  //   .minDuration(100)
+  //   .onEnd(() => {
+  //     runOnJS(setEditingLayer)(layer.id);
+  //   });
+  const gesture = Gesture.Simultaneous( singleTap, panGesture);
+
+  //---------- TEXT EDITING ----------//
+  const [temp, setTemp] = useState(layer.text);
+  const handleSubmit = () => {
+    editText(layer.id, temp);
+    setEditingLayer(null);
+    setActiveLayer(null);
+  };
+
+
+  //---------- ANIMATED STYLE ----------//
   const animatedStyle = useAnimatedStyle(() => ({
     position: 'absolute',
     left: x.value,
@@ -52,18 +94,35 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
       { translateY: -20 },
     ],
   }));
+
   const handleCopy = useCallback(() => duplicateLayer(layer.id), [duplicateLayer, layer.id]);
   const handleDelete = useCallback(() => deleteLayer(layer.id), [deleteLayer, layer.id]);
+  
   return (
-    <GestureDetector gesture={panGesture}>
+    <GestureDetector gesture={gesture}>
       <Animated.View style={animatedStyle}>
-        <Pressable style={styles.copyBtn} onPress={handleCopy}>
-          <Copy size={12} color={Colors.gray} />
-        </Pressable>
-         <Pressable style={styles.deleteBtn} onPress={handleDelete}>
-          <CircleX size={12} color={Colors.red} />
-        </Pressable>
-        <Text style={styles.text}>{layer.text}</Text>
+        {isActive && (
+          <>
+            <Pressable style={styles.copyBtn} onPress={handleCopy}>
+              <Copy size={Sizes.iconM} color={Colors.gray} />
+            </Pressable>
+            <Pressable style={styles.deleteBtn} onPress={handleDelete}>
+              <CircleX size={Sizes.iconM} color={Colors.red} />
+            </Pressable>
+          </>
+        )}
+        {isEditing ? (
+          <TextInput
+            value={temp}
+            onChangeText={setTemp}
+            onBlur={handleSubmit}
+            onSubmitEditing={handleSubmit}
+            style={styles.input}
+            autoFocus
+          />
+        ) : (
+          <Text style={styles.text}>{layer.text}</Text>
+        )}
       </Animated.View>
     </GestureDetector>
   );
@@ -86,5 +145,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Sizes.minusOffsetSm,
     right: Sizes.minusOffset2XL,
+  },
+  input: {
+    color: Colors.dark,
+    fontSize: Sizes.fontXL,
+    fontWeight: '600',
+    padding: 0,
+    margin: 0,
+    borderBottomWidth: 1,
+    borderColor: Colors.canvasBorder,
+    backgroundColor: '#FFF',
   },
 });

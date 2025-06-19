@@ -18,6 +18,7 @@ export interface WorkspaceViewProps extends PropsWithChildren {}
 
 const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
   ({ children }, ref) => {
+
   const scale = useSharedValue(1);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -25,7 +26,7 @@ const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
 
-  /* ----- Pinch (dengan clamp scale) ----- */
+  //---------- PINCH GESTURE ----------//
   const pinch = Gesture.Pinch()
     .onBegin(() => {
       startScale.value = scale.value;
@@ -39,8 +40,8 @@ const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
       );
     });
 
-  /* ----- Pan (dengan clamp pan) ----- */
-  const pan = Gesture.Pan()
+  //---------- PAN GESTURE WITH CLAMP----------//
+  const panGesture = Gesture.Pan()
     .onBegin(() => {
       startX.value = translateX.value;
       startY.value = translateY.value;
@@ -61,7 +62,9 @@ const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
       translateY.value = clamped.y;
     });
 
-  const gesture = Gesture.Simultaneous(pan, pinch);
+  //---------- BLANK TAP GESTURE ----------//
+
+  const gesture = Gesture.Simultaneous(panGesture, pinch);
   useImperativeHandle(ref, () => ({
         reset: () => {
           'worklet';
@@ -72,6 +75,7 @@ const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
           startY.value = 0;
         },
       }));
+      
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       { translateX: translateX.value },
