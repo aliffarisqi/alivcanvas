@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React, { useCallback } from 'react';
+import { Text, StyleSheet, Pressable } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -12,13 +12,14 @@ import {
 } from '@/features/canvas/store/textStore';
 import { Colors } from '@/app/theme/colors';
 import { Sizes } from '@/app/theme/siezs';
+import { CircleX, Copy, } from 'lucide-react-native';
 
 interface Props {
   layer: TLayer;
 }
 
 const TextLayer: React.FC<Props> = ({ layer }) => {
-  const { updatePosition } = useTextStore();
+  const { updatePosition, duplicateLayer, deleteLayer } = useTextStore();
 
   // current position of the text layer
   const x = useSharedValue(layer.x);
@@ -51,10 +52,17 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
       { translateY: -20 },
     ],
   }));
-
+  const handleCopy = useCallback(() => duplicateLayer(layer.id), [duplicateLayer, layer.id]);
+  const handleDelete = useCallback(() => deleteLayer(layer.id), [deleteLayer, layer.id]);
   return (
     <GestureDetector gesture={panGesture}>
       <Animated.View style={animatedStyle}>
+        <Pressable style={styles.copyBtn} onPress={handleCopy}>
+          <Copy size={12} color={Colors.gray} />
+        </Pressable>
+         <Pressable style={styles.deleteBtn} onPress={handleDelete}>
+          <CircleX size={12} color={Colors.red} />
+        </Pressable>
         <Text style={styles.text}>{layer.text}</Text>
       </Animated.View>
     </GestureDetector>
@@ -68,5 +76,15 @@ const styles = StyleSheet.create({
     color: Colors.dark,
     fontSize: Sizes.fontXL,
     fontWeight: '600',
+  },
+  copyBtn: {
+    position: 'absolute',
+    top: Sizes.minusOffsetSm,
+    left: Sizes.minusOffset2XL,  
+  },
+  deleteBtn: {
+    position: 'absolute',
+    top: Sizes.minusOffsetSm,
+    right: Sizes.minusOffset2XL,
   },
 });

@@ -33,4 +33,12 @@ export const Sizes = {
   fontL : 20,
   fontXL : 24,
   font2XL : 28,
+
+  //MINUS OFFSET
+  minusOffsetSm: -4,
+  minusOffsetM: -6,
+  minusOffsetL: -8,  
+  minusOffsetXL: -12,  
+  minusOffset2XL: -16,  
+  
 }
