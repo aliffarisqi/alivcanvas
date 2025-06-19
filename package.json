@@ -14,13 +14,15 @@
     "@react-navigation/native": "^7.1.11",
     "@react-navigation/stack": "^7.3.4",
     "lucide-react-native": "^0.517.0",
+    "nanoid": "^5.1.5",
     "react": "19.1.0",
     "react-native": "0.80.0",
     "react-native-gesture-handler": "^2.26.0",
     "react-native-reanimated": "^3.18.0",
     "react-native-safe-area-context": "^5.4.1",
     "react-native-screens": "^4.11.1",
-    "react-native-svg": "^15.12.0"
+    "react-native-svg": "^15.12.0",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
