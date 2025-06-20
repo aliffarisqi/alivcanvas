@@ -1,3 +1,4 @@
+import { Metrics } from '@/app/theme/metrics';
 import { Sizes } from '@/app/theme/siezs';
 import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
@@ -7,7 +8,7 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     paddingHorizontal: Sizes.paddingScreen,
-    paddingVertical:Sizes.paddingScreen,
+    paddingVertical: Metrics.appBar,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

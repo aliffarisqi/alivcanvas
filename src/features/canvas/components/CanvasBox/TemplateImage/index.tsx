@@ -6,6 +6,7 @@ import { styles } from './styles';
 import IconButton from '@/components/button/IconButton';
 import { RotateCcw } from 'lucide-react-native';
 import TextButton from '@/components/button/TextButton';
+import { useTextStore } from '@/features/canvas/store/textStore';
 
 const templateImages = [
   require('@/assets/templates/template1.jpg'),
@@ -16,9 +17,15 @@ const templateImages = [
 ];
 
 const TemplatePanel: React.FC = () => {
-  const setIsTemplatePanelVisible = useCanvasStore(s => s.setIsTemplatePanelVisible);
   const setBackgroundImage = useCanvasStore(s => s.setBackgroundImage);
   const backgroundImage = useCanvasStore(s => s.backgroundImage);
+  const setActivePanel = useCanvasStore((s) => s.setActivePanel);
+  const {setEditingLayer } = useTextStore();
+  
+  const handleDone = () => {
+    setActivePanel(null)   
+    setEditingLayer(null);   
+  };
 
   return (
     <Animated.View
@@ -34,7 +41,7 @@ const TemplatePanel: React.FC = () => {
           />
           <TextButton
             text="Done"
-            onPress={() => setIsTemplatePanelVisible(false)}
+            onPress={handleDone}
             accessibilityLabel="Set background image"
           />
         </View>

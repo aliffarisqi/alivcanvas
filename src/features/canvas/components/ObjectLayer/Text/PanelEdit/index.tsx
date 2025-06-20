@@ -8,14 +8,16 @@ import { Colors, FontColors } from '@/app/theme/colors';
 import SectionTitle from '@/components/text/SectionTitle';
 import ColorSwatch from '@/components/button/ColorButton';
 import TextButton from '@/components/button/TextButton';
+import { useCanvasStore } from '@/features/canvas/store/canvasStore';
 
 const FontAdjustPanel: React.FC = () => {
-  const { activeLayerId, layers, editFontSize, editColor, setActiveLayer, setEditingLayer } = useTextStore();
+  const { activeLayerId, layers, editFontSize, editColor, setEditingLayer } = useTextStore();
+  const setActivePanel = useCanvasStore((s) => s.setActivePanel);
 
   const layer = layers.find((l) => l.id === activeLayerId);
   if (!layer) return null; 
   const handleDone = () => {
-    setActiveLayer(null);   
+    setActivePanel(null)   
     setEditingLayer(null);   
   };
 

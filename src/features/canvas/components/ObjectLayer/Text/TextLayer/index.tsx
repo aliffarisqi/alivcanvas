@@ -13,6 +13,7 @@ import {
 import { Colors } from '@/app/theme/colors';
 import { Sizes } from '@/app/theme/siezs';
 import { CircleX, Copy, } from 'lucide-react-native';
+import { useCanvasStore } from '@/features/canvas/store/canvasStore';
 
 interface Props {
   layer: TLayer;
@@ -32,6 +33,7 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
 
   const isActive = activeLayerId === layer.id;
   const isEditing = editingLayerId === layer.id;
+  const setActivePanel = useCanvasStore((s) => s.setActivePanel);
 
   //---------- DRAG SHARED VALUE ----------//
   const x = useSharedValue(layer.x);
@@ -61,6 +63,7 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
     .onEnd(() => {
       const id = layer.id;
       runOnJS(setEditingLayer)(id);
+      runOnJS(setActivePanel)('font');
     });
   const gesture = Gesture.Simultaneous( singleTap, panGesture);
 
@@ -68,6 +71,8 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
   const [temp, setTemp] = useState(layer.text);
   const handleSubmit = () => {
     editText(layer.id, temp);
+    setEditingLayer(null); 
+    setActiveLayer(layer.id);
   };
 
 

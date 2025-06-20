@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import WorkspaceView, { WorkspaceViewHandle } from '@/features/canvas/components/WorkspaceView';
 import { Colors } from '@/app/theme/colors';
-import CanvasBox from '../components/CanvasBox';
+import CanvasBox, { CanvasBoxHandle } from '../components/CanvasBox';
 import TopToolbar from '../components/ToolBar/TopToolbar';
 import BottomToolbar from '../components/ToolBar/BottomToolbar';
 import { useTextStore } from '../store/textStore';
@@ -13,6 +13,8 @@ import { pickImageFromGallery } from '@/app/utils/pickImage';
 import ImageLayer from '../components/ObjectLayer/ImageLayer';
 import { useCanvasStore } from '../store/canvasStore';
 import TemplatePanel from '../components/CanvasBox/TemplateImage';
+import { saveToGallery } from '../utils/config/saveImage';
+
 
 const CanvasEditorScreen: React.FC = () => {
   const workspaceRef = useRef<WorkspaceViewHandle>(null);
@@ -22,8 +24,10 @@ const CanvasEditorScreen: React.FC = () => {
   const { layers: imageLayers } = useImageStore();
 
   //----CANVAS STORE----
-  const isTemplatePanelVisible = useCanvasStore((s) => s.isTemplatePanelVisible);
-  const setIsTemplatePanelVisible = useCanvasStore((s) => s.setIsTemplatePanelVisible);
+  const activePanel       = useCanvasStore((s) => s.activePanel);
+  const setActivePanel    = useCanvasStore((s) => s.setActivePanel);
+  const canvasRef = useRef<CanvasBoxHandle>(null);
+
 
   const { addImage } = useImageStore();
 
@@ -31,29 +35,38 @@ const CanvasEditorScreen: React.FC = () => {
     const uri = await pickImageFromGallery();
     if (uri) addImage(uri);
   };
+  const handleExport = async () => {
+  try {
+    const path = await canvasRef.current?.export();
+    if (!path) return;
+    await saveToGallery(path, 'MyCanvas'); 
+    Alert.alert('Berhasil', 'Gambar tersimpan di galeri');
+  } catch (e: any) {
+    Alert.alert('Gagal', e.message ?? 'Export gagal');
+  }
+};
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <WorkspaceView ref={workspaceRef}>
-        <CanvasBox />
-       {layers.map((l) => (
-          <TextLayer key={l.id} layer={l} />
-        ))}
-        {imageLayers.map((img) => <ImageLayer key={img.id} layer={img} />)}
+        <CanvasBox ref={canvasRef}/>
+        {layers.map((l) => (
+            <TextLayer key={l.id} layer={l} />
+          ))}
+          {imageLayers.map((img) => <ImageLayer key={img.id} layer={img} />
+        )}
       </WorkspaceView>
       <TopToolbar
         onAddText={addLayer}
         onAddImage={handleAddImage}
-        onTemplate={() => setIsTemplatePanelVisible(true)}
-        onExport={() => {
-        }}
+        onTemplate={() => setActivePanel('template')}
+        onExport={handleExport}
       />
       <BottomToolbar onFocus={() => workspaceRef.current?.reset()}/>
-      <FontAdjustPanel />
-      {isTemplatePanelVisible && (
-        <TemplatePanel/>
-      )}
-    </SafeAreaView>
+
+      {activePanel === 'font' && <FontAdjustPanel />}
+      {activePanel === 'template' && <TemplatePanel />}
+    </View>
   );
 };
 
