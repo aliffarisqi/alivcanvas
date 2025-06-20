@@ -1,5 +1,5 @@
 import React from 'react';
-import {  ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import { useTextStore } from '@/features/canvas/store/textStore';
@@ -7,20 +7,31 @@ import { styles } from './styles';
 import { Colors, FontColors } from '@/app/theme/colors';
 import SectionTitle from '@/components/text/SectionTitle';
 import ColorSwatch from '@/components/button/ColorButton';
+import TextButton from '@/components/button/TextButton';
 
 const FontAdjustPanel: React.FC = () => {
-  const { activeLayerId, layers, editFontSize, editColor } = useTextStore();
+  const { activeLayerId, layers, editFontSize, editColor, setActiveLayer, setEditingLayer } = useTextStore();
 
   const layer = layers.find((l) => l.id === activeLayerId);
   if (!layer) return null; 
+  const handleDone = () => {
+    setActiveLayer(null);   
+    setEditingLayer(null);   
+  };
 
   return (
     <Animated.View
       entering={FadeInUp}
       exiting={FadeOutDown}
       style={styles.panel}
-      pointerEvents="box-none" 
     >
+       <View style={styles.buttonRow}>
+       <TextButton
+          text="Done"
+          onPress={handleDone}
+          accessibilityLabel="Set font adjustments"
+        />
+       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         pointerEvents="auto"

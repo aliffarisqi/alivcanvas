@@ -5,7 +5,7 @@ export const Sizes = {
   // PADDING BUTTON
   paddingButtonM : 12,
   paddingButtonMH: 16,
-  paddingButtonMV: 12,
+  paddingButtonMV: 8,
 
   // RADIUS
   radiusSm : 8,

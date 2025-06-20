@@ -4,7 +4,7 @@ import Animated, { useSharedValue, useAnimatedStyle, runOnJS } from 'react-nativ
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { ImageLayer as ILayer, useImageStore } from '@/features/canvas/store/imageStore';
 import { clamp } from '@/features/canvas/utils/math/canvasMath';
-import { useCanvasStore } from '@/features/canvas/store/canvaStore';
+import { useCanvasStore } from '@/features/canvas/store/canvasStore';
 
 interface Props { layer: ILayer }
 

@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: Sizes.radiusXL,
     borderTopRightRadius: Sizes.radiusXL,
     padding: Sizes.paddingScreen,
+    paddingTop: Sizes.paddingScreen,
     zIndex:20,
   },
   title: {
@@ -21,5 +22,18 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
     color: Colors.white,
   },
-  slider: { width: '100%',marginBottom: Sizes.spaceXL, },
+  slider: { width: '100%',marginBottom: Sizes.spaceXL*2, },
+  doneBtn: {
+    alignSelf: 'flex-end',
+    marginBottom: Sizes.spaceXL,
+    paddingHorizontal: Sizes.paddingButtonMH,
+    paddingVertical: Sizes.paddingButtonMV,
+    backgroundColor: Colors.white,
+    borderRadius: Sizes.radiusM,
+  },
+    buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
 });

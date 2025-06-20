@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { Metrics } from '@/app/theme/metrics';
 import { clampPan, clampScale } from '../../utils/math/canvasMath';
 import { screenHeight, screenWidth } from '@/app/utils/device/dimension';
-import { useCanvasStore } from '../../store/canvaStore';
+import { useCanvasStore } from '../../store/canvasStore';
 
 const SCREEN_W = screenWidth;
 const SCREEN_H = screenHeight;

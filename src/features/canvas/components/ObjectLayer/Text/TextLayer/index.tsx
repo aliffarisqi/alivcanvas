@@ -59,14 +59,8 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
     .numberOfTaps(1)
     .maxDelay(500)
     .onEnd(() => {
-    const id = layer.id;
-      if (activeLayerId === id) {
-        runOnJS(setActiveLayer)(null);
-        runOnJS(setEditingLayer)(null);
-      } else {
-        runOnJS(setActiveLayer)(id);
-        runOnJS(setEditingLayer)(id);
-      }
+      const id = layer.id;
+      runOnJS(setEditingLayer)(id);
     });
   const gesture = Gesture.Simultaneous( singleTap, panGesture);
 
@@ -74,8 +68,8 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
   const [temp, setTemp] = useState(layer.text);
   const handleSubmit = () => {
     editText(layer.id, temp);
-    setEditingLayer(null);
-    setActiveLayer(null);
+    // setEditingLayer(null);
+    // setActiveLayer(null);
   };
 
 

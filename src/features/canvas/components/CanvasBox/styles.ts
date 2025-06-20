@@ -13,4 +13,9 @@ export const styles = StyleSheet.create({
     borderColor: Colors.canvasBorder,
     overflow: 'hidden',
   },
+  image:{
+    width: Metrics.canvasSide,
+    height: Metrics.canvasSide,
+    resizeMode:"cover"
+  }
 });

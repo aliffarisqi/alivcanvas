@@ -1,13 +1,22 @@
-import React, { PropsWithChildren } from 'react';
-import { View } from 'react-native';
+import React from 'react';
+import { View, Image } from 'react-native';
 import { styles } from './styles';
+import { useCanvasStore } from '@/features/canvas/store/canvasStore';
 
+const CanvasBox: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const backgroundImage = useCanvasStore((s) => s.backgroundImage);
 
-export interface CanvasBoxProps extends PropsWithChildren {
-}
-
-const CanvasBox: React.FC<CanvasBoxProps> = ({ children }) => (
-  <View style={styles.canvas}>{children}</View>
-);
+  return (
+    <View style={styles.canvas}>
+      {backgroundImage && (
+        <Image
+          source={backgroundImage}
+          style={styles.image}
+        />
+      )}
+      {children}
+    </View>
+  );
+};
 
 export default CanvasBox;
