@@ -14,4 +14,7 @@
 I ran into technical issues with view capturing and cropping.
 
 ## 📸 Screenshots
+![Image](https://github.com/user-attachments/assets/8417c874-e327-403b-ba25-9405c1abd787)
+![Image](https://github.com/user-attachments/assets/45672fed-9183-411e-acb7-0610dedd7524)
 
+## Video
