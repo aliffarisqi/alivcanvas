@@ -6,7 +6,8 @@ import CanvasBox from '../components/CanvasBox';
 import TopToolbar from '../components/ToolBar/TopToolbar';
 import BottomToolbar from '../components/ToolBar/BottomToolbar';
 import { useTextStore } from '../store/textStore';
-import TextLayer from '../components/Text/TextStatic';
+import TextLayer from '../components/Text/TextLayer';
+import FontAdjustPanel from '../components/Text/PanelEdit/FontEdit';
 
 const CanvasEditorScreen: React.FC = () => {
   const workspaceRef = useRef<WorkspaceViewHandle>(null);
@@ -26,6 +27,7 @@ const CanvasEditorScreen: React.FC = () => {
         onExport={() => {/* TODO */}}
       />
       <BottomToolbar onFocus={() => workspaceRef.current?.reset()}/>
+      <FontAdjustPanel />
     </SafeAreaView>
   );
 };

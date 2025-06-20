@@ -68,11 +68,6 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
         runOnJS(setEditingLayer)(id);
       }
     });
-  // const doubleTap = Gesture.LongPress()
-  //   .minDuration(100)
-  //   .onEnd(() => {
-  //     runOnJS(setEditingLayer)(layer.id);
-  //   });
   const gesture = Gesture.Simultaneous( singleTap, panGesture);
 
   //---------- TEXT EDITING ----------//
@@ -117,11 +112,11 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
             onChangeText={setTemp}
             onBlur={handleSubmit}
             onSubmitEditing={handleSubmit}
-            style={styles.input}
+            style={[styles.input, {fontSize: layer.fontSize }]}
             autoFocus
           />
         ) : (
-          <Text style={styles.text}>{layer.text}</Text>
+          <Text style={[styles.text, {fontSize: layer.fontSize }]}>{layer.text}</Text>
         )}
       </Animated.View>
     </GestureDetector>
@@ -133,7 +128,7 @@ export default TextLayer;
 const styles = StyleSheet.create({
   text: {
     color: Colors.dark,
-    fontSize: Sizes.fontXL,
+    // fontSize: Sizes.fontXL,
     fontWeight: '600',
   },
   copyBtn: {
@@ -148,12 +143,11 @@ const styles = StyleSheet.create({
   },
   input: {
     color: Colors.dark,
-    fontSize: Sizes.fontXL,
+    // fontSize: Sizes.fontXL,
     fontWeight: '600',
     padding: 0,
     margin: 0,
     borderBottomWidth: 1,
-    borderColor: Colors.canvasBorder,
-    backgroundColor: '#FFF',
+    borderColor: Colors.gray,
   },
 });
