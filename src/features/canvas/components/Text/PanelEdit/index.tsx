@@ -22,7 +22,6 @@ const FontAdjustPanel: React.FC = () => {
       pointerEvents="box-none" 
     >
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 20 }}
         showsVerticalScrollIndicator={false}
         pointerEvents="auto"
       >
