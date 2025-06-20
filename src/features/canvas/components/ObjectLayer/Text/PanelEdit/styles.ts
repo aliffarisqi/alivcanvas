@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: Sizes.radiusM,
   },
-    buttonRow: {
+  buttonRow: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',

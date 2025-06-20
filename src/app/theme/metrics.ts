@@ -5,5 +5,5 @@ export const Metrics = {
   borderWidth: 2,
   workspaceMultiplier: 3,
 
-  panelHeight:250,
+  panelHeight:350,
 } as const;
