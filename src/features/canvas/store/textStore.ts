@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import uuid from 'react-native-uuid';
 import { WORKSPACE_SIZE } from '../utils/config/dimension';
 import { Sizes } from '@/app/theme/siezs';
+import { Colors } from '@/app/theme/colors';
 
 export interface TextLayer {
   id: string;
@@ -9,6 +10,7 @@ export interface TextLayer {
   x: number;
   y: number;
   fontSize: number;
+  color: string; 
 }
 
 interface TextState {
@@ -23,6 +25,7 @@ interface TextState {
   setEditingLayer: (id: string | null) => void;
   editText: (id: string, newText: string) => void;
   editFontSize: (id: string, size: number) => void;
+  editColor: (id: string, color: string) => void;
 }
 
 export const useTextStore = create<TextState>((set, get) => ({
@@ -41,6 +44,7 @@ export const useTextStore = create<TextState>((set, get) => ({
           x: WORKSPACE_SIZE / 2,
           y: WORKSPACE_SIZE / 2,
           fontSize:Sizes.fontM,
+          color: Colors.dark,
         },
       ],
     })),
@@ -91,6 +95,14 @@ export const useTextStore = create<TextState>((set, get) => ({
     set((state) => ({
       layers: state.layers.map((l) =>
         l.id === id ? { ...l, fontSize: size } : l,
+      ),
+    })),
+
+  // EDIT COLOR
+  editColor: (id, color) =>
+    set((state) => ({
+      layers: state.layers.map((l) =>
+        l.id === id ? { ...l, color } : l,
       ),
     })),
 }));

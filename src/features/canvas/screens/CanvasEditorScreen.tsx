@@ -7,12 +7,11 @@ import TopToolbar from '../components/ToolBar/TopToolbar';
 import BottomToolbar from '../components/ToolBar/BottomToolbar';
 import { useTextStore } from '../store/textStore';
 import TextLayer from '../components/Text/TextLayer';
-import FontAdjustPanel from '../components/Text/PanelEdit/FontEdit';
+import FontAdjustPanel from '../components/Text/PanelEdit';
 
 const CanvasEditorScreen: React.FC = () => {
   const workspaceRef = useRef<WorkspaceViewHandle>(null);
   const { layers, addLayer } = useTextStore();
-
   return (
     <SafeAreaView style={styles.container}>
       <WorkspaceView ref={workspaceRef}>

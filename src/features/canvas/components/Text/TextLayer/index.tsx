@@ -112,11 +112,11 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
             onChangeText={setTemp}
             onBlur={handleSubmit}
             onSubmitEditing={handleSubmit}
-            style={[styles.input, {fontSize: layer.fontSize }]}
+            style={[styles.input, { fontSize: layer.fontSize, color: layer.color },]}
             autoFocus
           />
         ) : (
-          <Text style={[styles.text, {fontSize: layer.fontSize }]}>{layer.text}</Text>
+          <Text style={[styles.text, { fontSize: layer.fontSize, color: layer.color },]}>{layer.text}</Text>
         )}
       </Animated.View>
     </GestureDetector>
@@ -127,8 +127,6 @@ export default TextLayer;
 
 const styles = StyleSheet.create({
   text: {
-    color: Colors.dark,
-    // fontSize: Sizes.fontXL,
     fontWeight: '600',
   },
   copyBtn: {
@@ -142,8 +140,6 @@ const styles = StyleSheet.create({
     right: Sizes.minusOffset2XL,
   },
   input: {
-    color: Colors.dark,
-    // fontSize: Sizes.fontXL,
     fontWeight: '600',
     padding: 0,
     margin: 0,
