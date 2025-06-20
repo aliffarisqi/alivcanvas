@@ -68,8 +68,6 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
   const [temp, setTemp] = useState(layer.text);
   const handleSubmit = () => {
     editText(layer.id, temp);
-    // setEditingLayer(null);
-    // setActiveLayer(null);
   };
 
 
@@ -106,8 +104,13 @@ const TextLayer: React.FC<Props> = ({ layer }) => {
             onChangeText={setTemp}
             onBlur={handleSubmit}
             onSubmitEditing={handleSubmit}
-            style={[styles.input, { fontSize: layer.fontSize, color: layer.color },]}
+            style={[
+              styles.input,
+              { fontSize: layer.fontSize, color: layer.color },
+              temp === '' && styles.emptyFallback,  
+            ]}
             autoFocus
+            placeholder="Ketik teks di sini" 
           />
         ) : (
           <Text style={[styles.text, { fontSize: layer.fontSize, color: layer.color },]}>{layer.text}</Text>
@@ -139,5 +142,8 @@ const styles = StyleSheet.create({
     margin: 0,
     borderBottomWidth: 1,
     borderColor: Colors.gray,
+  },
+  emptyFallback: {
+    minWidth: 20,
   },
 });
