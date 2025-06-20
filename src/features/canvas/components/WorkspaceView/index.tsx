@@ -5,6 +5,7 @@ import { styles } from './styles';
 import { Metrics } from '@/app/theme/metrics';
 import { clampPan, clampScale } from '../../utils/math/canvasMath';
 import { screenHeight, screenWidth } from '@/app/utils/device/dimension';
+import { useCanvasStore } from '../../store/canvaStore';
 
 const SCREEN_W = screenWidth;
 const SCREEN_H = screenHeight;
@@ -25,6 +26,8 @@ const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
   const startScale = useSharedValue(1);
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
+  const isInteractingLayer = useCanvasStore((s) => s.isInteractingLayer);
+
 
   //---------- PINCH GESTURE ----------//
   const pinch = Gesture.Pinch()
@@ -32,12 +35,14 @@ const WorkspaceView = forwardRef<WorkspaceViewHandle, WorkspaceViewProps>(
       startScale.value = scale.value;
     })
     .onUpdate((e) => {
+      if (!isInteractingLayer) {
       scale.value = clampScale(
         startScale.value * e.scale,
         WORKSPACE,
         SCREEN_W,
         SCREEN_H,
       );
+      }
     });
 
   //---------- PAN GESTURE WITH CLAMP----------//

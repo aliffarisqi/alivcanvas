@@ -1,6 +1,6 @@
 /* Semua fungsi bertanda 'worklet' agar aman dipanggil di UI thread */
 
-export const clamp = (v: number, min: number, max: number) => {
+export const clamp = (v: number, min: number, max: number): number => {
   'worklet';
   return Math.min(max, Math.max(min, v));
 };
